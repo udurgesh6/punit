@@ -1,33 +1,23 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import Child from "./Child";
+import Child2 from "./Child2";
 // useState, useEffect, useLayoutEffect, useReducer, useContext
 const App = () => {
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(1);
-  const [people, setPeople] = useState([]);
-  const addThisName = () => {
-    setPeople((people) => [...people, name]);
+  const [showingChild, setShowingChild] = useState(true);
+  const [cart, setCart] = useState(0);
+  const addCart = () => {
+    setCart((cart) => cart + 1);
+  };
+  const showChildOrChild2 = () => {
+    setShowingChild((showingChild) => !showingChild);
   };
   return (
     <div>
-      <input
-        placeholder="Name"
-        type="text"
-        value={name}
-        onChange={(event) => setName(event.target.value)}
-      />
-      <input
-        placeholder="Age"
-        type="number"
-        value={age}
-        onChange={(eventage) => setAge(eventage.target.value)}
-      />
-      <button onClick={addThisName}>Add to list</button>
-      <ul>
-        {people.map((element) => (
-          <li>{element}</li>
-        ))}
-      </ul>
+      <p>Cart = {cart}</p>
+      {/* {showingChild && <Child />} */}
+      {showingChild ? <Child /> : <Child2 />}
+      <button onClick={showChildOrChild2}>Show Child</button>
+      <button onClick={addCart}>Add to Cart</button>
     </div>
   );
 };
