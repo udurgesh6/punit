@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from "react";
-import Child from "./Child";
-import Child2 from "./Child2";
-// useState, useEffect, useLayoutEffect, useReducer, useContext
+import React, { useState } from "react";
+import MainComponent from "./AmazonCart/MainComponent";
+import Navigation from "./AmazonCart/Navigation";
+import SubNavigation from "./AmazonCart/SubNavigation";
+import cartLayer from "./AmazonCart/CartContext";
+
 const App = () => {
-  const [showingChild, setShowingChild] = useState(true);
   const [cart, setCart] = useState(0);
-  const addCart = () => {
+  const incCart = () => {
     setCart((cart) => cart + 1);
   };
-  const showChildOrChild2 = () => {
-    setShowingChild((showingChild) => !showingChild);
-  };
   return (
-    <div>
-      <p>Cart = {cart}</p>
-      {/* {showingChild && <Child />} */}
-      {showingChild ? <Child /> : <Child2 />}
-      <button onClick={showChildOrChild2}>Show Child</button>
-      <button onClick={addCart}>Add to Cart</button>
-    </div>
+    <cartLayer.Provider value={{ cart, incCart }}>
+      <div style={{ border: "1px solid red", height: "100vh" }}>
+        {/* Props Based */}
+        {/* <Navigation cart_name={cart} name="Durgesh" age="25" />
+      <SubNavigation />
+      <MainComponent cart_name={cart} inc_name={incCart} /> */}
+
+        <Navigation />
+        <SubNavigation />
+        <MainComponent />
+      </div>
+    </cartLayer.Provider>
   );
 };
 
