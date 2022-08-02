@@ -1,27 +1,16 @@
 import React, { useState } from "react";
-import MainComponent from "./AmazonCart/MainComponent";
-import Navigation from "./AmazonCart/Navigation";
-import SubNavigation from "./AmazonCart/SubNavigation";
-import cartLayer from "./AmazonCart/CartContext";
+import Child2 from "./Child2";
 
 const App = () => {
-  const [cart, setCart] = useState(0);
-  const incCart = () => {
-    setCart((cart) => cart + 1);
+  const [childDisable, setChildDisable] = useState(true);
+  const disableChild = () => {
+    setChildDisable((childDisable) => !childDisable);
   };
   return (
-    <cartLayer.Provider value={{ cart, incCart }}>
-      <div style={{ border: "1px solid red", height: "100vh" }}>
-        {/* Props Based */}
-        {/* <Navigation cart_name={cart} name="Durgesh" age="25" />
-      <SubNavigation />
-      <MainComponent cart_name={cart} inc_name={incCart} /> */}
-
-        <Navigation />
-        <SubNavigation />
-        <MainComponent />
-      </div>
-    </cartLayer.Provider>
+    <div style={{ border: "1px solid blue" }}>
+      {childDisable ? <Child2 /> : <div>No Child</div>}
+      <button onClick={disableChild}>Disable/Enable</button>
+    </div>
   );
 };
 
