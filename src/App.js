@@ -1,61 +1,55 @@
-import React, { useState, useEffect } from "react";
-import Child2 from "./Child2";
-import axios from "axios";
-import Child from "./Child";
+import React, { useState, useMemo } from "react";
 
 const App = () => {
-  const [products, setProducts] = useState([]);
-
-  // const callProductsApiThroughAsyncAwait = async () => {
-  //   const someData = await axios.get("https://fakestoreapi.com/products");
-  //   console.log(someData);
+  const [counter, setCounter] = useState(1);
+  const [counter2, setCounter2] = useState(1);
+  const [name, setName] = useState("");
+  const incrementCounter = () => {
+    setCounter((counter) => counter + 1);
+  };
+  const incrementCounter2 = () => {
+    setCounter2((counter2) => counter2 + 1);
+  };
+  // button logic
+  // const isEvenOrOdd = () => {
+  //   if (counter % 2 === 0) {
+  //     setIsEvenOdd("Even");
+  //   } else {
+  //     setIsEvenOdd("Odd");
+  //   }
   // };
 
-  // const callProductsApiThroughSimpleAxios = async () => {
-  //   axios
-  //     .get("https://fakestoreapi.com/products")
-  //     .then((response) => console.log(response))
-  //     .catch((err) => console.log(err));
-  // };
-  const num = 1;
-  useEffect(() => {
-    axios
-      .get(
-        `https://fakestoreapi.com/products?product=clothing&name=punit&age=2`
-      )
-      .then((response) => console.log(response));
-  }, []);
-
-  const addProduct = () => {
-    axios
-      .patch("https://fakestorapi.com/products/op", {
-        title: "test product",
-        price: 13.5,
-        description: "lorem ipsum set",
-        image: "https://i.pravatar.cc",
-        category: "electronic",
-        id: "uniqueid",
-      })
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
+  // direct logic not optimised
+  const directlyIsEvenOdd = () => {
+    console.log("Even odd function called");
+    let i = 0;
+    while (i < 2000000000) {
+      i++;
+    }
+    return counter % 2 === 0 ? "Even" : "Odd";
   };
 
-  const deleteProduct = () => {
-    axios
-      .delete("https://fakestoreapi.com/products/6")
-      .then((resp) => console.log(resp));
-  };
+  // direct logic but optimised
+  const directlyIsEvenOddOptimised = useMemo(() => {
+    console.log("Even odd function called");
+    let i = 0;
+    while (i < 2000000000) {
+      i++;
+    }
+    return counter % 2 === 0 ? "Even" : "Odd";
+  }, [counter]);
 
   return (
     <div style={{ border: "1px solid blue" }}>
-      {/* <button onClick={callProductsApiThroughSimpleAxios}>Call API</button> */}
-      {products.map((product) => (
-        <div key={product.id}>
-          <p>Title - {product.title}</p>
-          <p>Price - {product.price}</p>
-        </div>
-      ))}
-      <button onClick={deleteProduct}>Delete</button>
+      <p>Count - {counter}</p>
+      {/* <p> Even or odd - {isEvendd}</p> */}
+      {/* {directlyIsEvenOdd()} */}
+      {directlyIsEvenOddOptimised}
+      <button onClick={incrementCounter}>Increment Counter</button>
+      {/* <button onClick={isEvenOrOdd}>Check if even or odd</button> */}
+      <p>Counter 2 - {counter2}</p>
+      <button onClick={incrementCounter2}>Increment Counter2</button>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
     </div>
   );
 };
